@@ -1,0 +1,62 @@
+<h1 class="text-center mt-3">
+    Página para postear.
+</h1>
+
+
+{{#if error}}
+    <h2 class="text-center mt-3">Usted no tiene permisos para realizar un post.</h2>
+    {{else}}
+    <h2 class="text-center mt-3">Pueda crear su publicación</h2>
+
+    <form id="formPost">
+        Titulo: <input type="text" class="form-control" name="titulo" id="titulo" required>
+        Contenido: <input type="text" class="form-control" name="contenido" id="contenido" required>
+        Categoria:
+        <select name="categoria" id="categoria" class="form-control">
+            {{#each categorias}}
+            <option value="{{this.id}}">{{this.nombre}}</option>
+            {{/each}}
+        </select>
+        <button type="submit" class="btn btn-primary mt-3">Publicar</button>
+    </form>
+{{/if}}
+
+
+
+<script>
+    let formulario = document.getElementById("formPost");
+
+        formulario.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+        "token": localStorage.getItem("token_ejemplo"),
+        "titulo": titulo.value,
+        "contenido": contenido.value,
+        "categoria": categoria.value
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("/api/v1/post", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if(result.code == 201){
+                alert(result.message)
+                location.href = "/";
+            }else{
+                alert(result.message)
+            }
+        })
+        .catch(error => console.log('error', error));
+
+    })
+</script>

@@ -1,0 +1,47 @@
+
+
+<h1 class="text-center mt-3">
+    Vista Login
+</h1>
+
+<form id="formLogin">
+    Email: <input type="email" class="form-control" name="email" id="email" required>
+    Password: <input type="password" class="form-control" name="password" id="password" required>
+    <button type="submit" class="btn btn-primary mt-3">Validar!</button>
+</form>
+
+
+<script>
+    let login = document.getElementById("formLogin");
+    login.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "email": email.value,
+            "password": password.value
+        });
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("/api/v1/login", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if(result.code == 200){
+                alert("Usuario válido");
+                localStorage.setItem("token_ejemplo", result.token)
+                location.href = "/";
+            }else{
+                alert(result.message)
+            }
+        })
+        .catch(error => console.log('error', error));
+    });
+</script>

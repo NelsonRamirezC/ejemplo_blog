@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Blog Sequelize</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/tecnologia">Tecnología</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/ciencia">Ciencia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="linkPost" href="">Postea</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="linkLogin" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="linkLogout" href="">Logout</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" id="linkRegister" href="/register">Registro</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<script>
+  const validar = () => {
+    let token = localStorage.getItem("token_ejemplo");
+    if(token){
+      linkRegister.style.display = "none";
+      linkLogin.style.display = "none";
+    }else {
+      linkPost.style.display = "none";
+      linkLogout.style.display = "none";
+    }
+  }
+
+  linkLogout.addEventListener("click", (event) => {
+    event.preventDefault();
+    localStorage.clear();
+    alert("Se hizo logout con éxito.")
+    location.reload()
+  })
+
+
+  linkPost.addEventListener("click", (event) => {
+     event.preventDefault();
+    let token = localStorage.getItem("token_ejemplo");
+    location.href= "/post?token="+token;
+  })
+
+
+  validar();
+
+</script>

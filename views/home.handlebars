@@ -1,0 +1,24 @@
+<h1 class="text-center mt-5">Página principal</h1>
+
+
+<section>
+    {{#if posts}}
+
+    <div class="row">
+        {{#each posts}}
+        <div class="col-12 col-md-6 col-lg-4">
+            {{>card 
+                titulo= this.titulo
+                contenido= this.contenido
+                autor= this.autor
+                categoria= this.categoria
+            }}
+        </div>
+        {{/each}}
+    </div>
+    
+
+    {{else}}
+    <h2 class="text-center">No hay post creados para mostrar</h2>
+    {{/if}}
+</section>
